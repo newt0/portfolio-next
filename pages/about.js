@@ -3,19 +3,17 @@ import Link from "next/link";
 import { Component } from "react";
 import fetch from "isomorphic-unfetch";
 export default class About extends Component {
-  static getInitialProps() {
-    fetch("https://api.github.com/users/newt0")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+  static async getInitialProps() {
+    const res = await fetch("https://api.github.com/users/newt0");
+    const data = await res.json();
 
-    return { user: "user" };
+    return { user: data };
   }
 
   render() {
     return (
       <Layout title="about">
+        {JSON.stringify(this.props.user)}
         <Link href="/">
           <a>Go to Home</a>
         </Link>
